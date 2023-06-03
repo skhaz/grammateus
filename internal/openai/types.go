@@ -1,5 +1,7 @@
 package openai
 
+import "net/http"
+
 type RoleType string
 
 type ModelType string
@@ -30,4 +32,10 @@ type Error struct {
 type Response struct {
 	Choices []*Choice `json:"choices"`
 	Error   *Error    `json:"error,omitempty"`
+}
+
+type Client struct {
+	client *http.Client
+	apiKey string
+	url    string
 }

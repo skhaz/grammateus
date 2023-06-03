@@ -18,12 +18,6 @@ const (
 	RoleSystem    RoleType = "system"
 )
 
-type Client struct {
-	client *http.Client
-	apiKey string
-	url    string
-}
-
 func NewClient(apiKey string) *Client {
 	return &Client{
 		client: &http.Client{},
