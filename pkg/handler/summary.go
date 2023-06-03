@@ -13,15 +13,15 @@ import (
 
 func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 	var (
+		callback twitch.Callback
+
 		room     = r.URL.Query().Get("room")
 		batch, _ = strconv.Atoi(r.URL.Query().Get("batch"))
 
 		count    = 0
 		messages = make([]string, 0, batch)
 		channel  = make(chan string)
-		timeout  = time.After(10 * time.Second)
-
-		callback twitch.Callback
+		timeout  = time.After(30 * time.Second)
 
 		e = json.NewEncoder(w)
 	)
@@ -44,7 +44,7 @@ func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 
 	for count < batch {
 		select {
-		case <-time.After(1 * time.Second):
+		case <-time.After(time.Second):
 		case <-timeout:
 			break
 		}
