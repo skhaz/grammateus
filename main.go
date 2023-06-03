@@ -13,7 +13,7 @@ import (
 
 func main() {
 	var (
-		twitch  = twitch.NewClient(os.Getenv("TWITCH_USER"), os.Getenv("TWITCH_TOKE"))
+		twitch  = twitch.NewClient(os.Getenv("TWITCH_USER"), os.Getenv("TWITCH_TOKEN"))
 		openai  = openai.NewClient(os.Getenv("OPENAI_API_KEY"))
 		handler = handler.NewHandler(twitch, openai)
 	)
