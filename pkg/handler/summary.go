@@ -20,8 +20,8 @@ func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 
 		count    = 0
 		messages = make([]string, 0, batch)
-		channel  = make(chan string)
-		timeout  = time.After(30 * time.Second)
+		//channel  = make(chan string)
+		timeout = time.After(5 * time.Second)
 
 		e = json.NewEncoder(w)
 	)
@@ -31,7 +31,7 @@ func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 	callback = func(message string) {
 		count++
 		messages = append(messages, strconv.Quote(message))
-		channel <- message
+		//channel <- message
 	}
 
 	h.Twitch.Register(room, &callback)
