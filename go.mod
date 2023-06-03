@@ -1,3 +1,3 @@
-module skhaz.dev/summarizer
+module streamopinion.fun
 
 go 1.20
