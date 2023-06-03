@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title></title>
+    <style type="text/css">
+      html {
+        overflow-x: hidden;
+        height: 100%;
+      }
+
+      body {
+        margin: 0px;
+        padding: 0px;
+        font-family: sans-serif;
+        font-display: swap;
+      }
+
+      #input {
+        appearance: none;
+        font-size: 16px;
+        color: #333;
+        width: 100%;
+        background-color: #eee;
+        border: none;
+        padding: 10px 16px 11px 16px;
+        border-radius: 100px;
+        box-shadow: none;
+        outline: none;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      .outer {
+        margin: 0 auto;
+        max-width: 600px;
+        padding: 80px 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main id="container"></main>
+
+    <script type="text/javascript">
+      const element = document.getElementById("container");
+
+      /*
+function makeRequest() {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 300000); // Timeout de 5 minutos (300000 milissegundos)
+
+  fetch('/summary', { signal: controller.signal })
+    .then(response => response.json())
+    .then(data => {
+      // Manipule a resposta recebida aqui
+      console.log(data);
+    })
+    .catch(error => {
+      // Manipule os erros da solicitação aqui
+      console.error(error);
+    })
+    .finally(() => {
+      clearTimeout(timeout); // Limpa o timeout
+
+      // Faz a próxima solicitação após 1 minuto (60000 milissegundos)
+      setTimeout(makeRequest, 60000);
+    });
+}
+
+// Inicia a rotina de solicitações
+makeRequest();
+*/
+
+      const onSubmit = (event) => {
+        event.preventDefault();
+
+        const input = document.getElementById("input");
+        var el = document.createElement("a");
+        el.href = input.value;
+
+        const user = el.pathname.replace(/\/$/, "").split("/").slice(-1).pop().trim().toLowerCase();
+
+        if (user) {
+          window.location.hash = new URLSearchParams({
+            room: user,
+            batch: 8,
+          }).toString();
+        }
+      };
+
+      const renderInput = () => {
+        element.innerHTML = `
+        <form class="outer" action="#" onsubmit="onSubmit(event); return false;" >
+          <label for="input">
+            <p>enter your <b>twitch</b> profile (make sure you're in live.)</p>
+          </label>
+          <input id="input" type="text" placeholder="rodrigodelduca or https://www.twitch.tv/rodrigodelduca"></input>
+        </form>      
+      `;
+      };
+
+      const renderSummary = () => {
+        const { room } = Object.fromEntries(new URLSearchParams(window.location.hash.substr(1)).entries());
+      };
+
+      const render = () => {
+        window.location.href.includes("#") ? renderSummary() : renderInput();
+      };
+
+      document.addEventListener("DOMContentLoaded", render);
+      window.addEventListener("hashchange", render);
+    </script>
+  </body>
+</html>
