@@ -42,7 +42,7 @@ func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 	request := &openai.Request{
 		Model: openai.ModelGpt35Turbo,
 		Messages: []*openai.Message{
-			{Role: openai.RoleSystem, Content: "You are a streamer assistant who resumes what their chat is about; please make an objective make summary in one message of the following messages. Your analysis must be fun and your message must be in the same language that messages are written."},
+			{Role: openai.RoleSystem, Content: "You are a streamer assistant who resumes what their chat is about; please make an objective summary in one of the following messages enclosed with quotes. Your analysis must be fun, and your message must be in the same language that letters are written; please, skip the intro and go straight to the point."},
 			{Role: openai.RoleUser, Content: strings.Join(messages, " ")},
 		}}
 
