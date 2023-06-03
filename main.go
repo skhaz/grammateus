@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"os"
 
-	"skhaz.dev/streamopinion/internal/handler"
-	"skhaz.dev/streamopinion/internal/openai"
-	"skhaz.dev/streamopinion/internal/twitch"
+	"skhaz.dev/streamopinion/pkg/handler"
+	"skhaz.dev/streamopinion/pkg/openai"
+	"skhaz.dev/streamopinion/pkg/twitch"
 )
 
 func main() {
