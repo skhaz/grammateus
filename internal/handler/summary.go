@@ -23,8 +23,9 @@ func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 		e = json.NewEncoder(w)
 	)
 
-	w.Write([]byte("\n")) // workaround for 503 first byte timeout error when using Google's frontend.
 	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte("\n")) // workaround for 503 first byte timeout error when using Google's frontend.
+	w.(http.Flusher).Flush()
 
 	callback = func(message string) {
 		count++
