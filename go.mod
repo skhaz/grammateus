@@ -1,3 +1,3 @@
-module streamopinion.fun
+module skhaz.dev/streamopinion
 
 go 1.20

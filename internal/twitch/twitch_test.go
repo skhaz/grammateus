@@ -3,7 +3,7 @@ package twitch_test
 import (
 	"testing"
 
-	"streamopinion.fun/internal/twitch"
+	"skhaz.dev/streamopinion/internal/twitch"
 )
 
 func TestParse(t *testing.T) {

@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"streamopinion.fun/internal/openai"
-	"streamopinion.fun/internal/twitch"
+	"skhaz.dev/streamopinion/internal/openai"
+	"skhaz.dev/streamopinion/internal/twitch"
 )
 
 func NewHandler(twitch *twitch.Client, openai *openai.Client) *Handler {

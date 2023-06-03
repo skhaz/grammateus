@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"streamopinion.fun/internal/openai"
-	"streamopinion.fun/internal/twitch"
+	"skhaz.dev/streamopinion/internal/openai"
+	"skhaz.dev/streamopinion/internal/twitch"
 )
 
 func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
