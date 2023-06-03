@@ -1,7 +1,6 @@
 package cache
 
 import (
-	"log"
 	"sync"
 	"time"
 )
@@ -61,7 +60,6 @@ func (c *Cache) gc() {
 
 		for key, entry := range c.data {
 			if time.Now().After(entry.expiration) {
-				log.Printf("collecting %s", key)
 				delete(c.data, key)
 			}
 		}
