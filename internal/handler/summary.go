@@ -23,6 +23,7 @@ func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 		e = json.NewEncoder(w)
 	)
 
+	w.Write([]byte{0})
 	w.Header().Set("Content-Type", "application/json")
 
 	callback = func(message string) {
