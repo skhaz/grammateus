@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 
 	"skhaz.dev/streamopinion/pkg/openai"
 	"skhaz.dev/streamopinion/pkg/twitch"
@@ -21,7 +20,6 @@ func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 		count    = 0
 		messages = make([]string, 0, batch)
 		channel  = make(chan string)
-		timeout  = time.After(5 * time.Second)
 
 		e = json.NewEncoder(w)
 	)
@@ -38,17 +36,8 @@ func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 
 	defer h.Twitch.Unregister(room, &callback)
 
-	// for count < batch {
-	// 	<-channel
-	// }
-
 	for count < batch {
-		select {
-		case <-channel:
-		case <-time.After(time.Second):
-		case <-timeout:
-			break
-		}
+		<-channel
 	}
 
 	request := &openai.Request{

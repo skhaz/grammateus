@@ -46,33 +46,6 @@
     <script type="text/javascript">
       const element = document.getElementById("container");
 
-      /*
-function makeRequest() {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 300000); // Timeout de 5 minutos (300000 milissegundos)
-
-  fetch('/summary', { signal: controller.signal })
-    .then(response => response.json())
-    .then(data => {
-      // Manipule a resposta recebida aqui
-      console.log(data);
-    })
-    .catch(error => {
-      // Manipule os erros da solicitação aqui
-      console.error(error);
-    })
-    .finally(() => {
-      clearTimeout(timeout); // Limpa o timeout
-
-      // Faz a próxima solicitação após 1 minuto (60000 milissegundos)
-      setTimeout(makeRequest, 60000);
-    });
-}
-
-// Inicia a rotina de solicitações
-makeRequest();
-*/
-
       const onSubmit = (event) => {
         event.preventDefault();
 
