@@ -13,29 +13,18 @@
       body {
         margin: 0px;
         padding: 0px;
-        font-family: sans-serif;
-        font-display: swap;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
       }
 
-      #input {
-        appearance: none;
-        font-size: 16px;
-        color: #333;
-        width: 100%;
-        background-color: #eee;
-        border: none;
-        padding: 10px 16px 11px 16px;
-        border-radius: 100px;
-        box-shadow: none;
-        outline: none;
-        margin: 0;
-        box-sizing: border-box;
+      #container {
+        text-align: center;
       }
 
-      .outer {
-        margin: 0 auto;
-        max-width: 600px;
-        padding: 80px 20px;
+      #text {
+        font-size: 24px;
       }
     </style>
   </head>
@@ -76,7 +65,7 @@
 
       const renderSummary = () => {
         const { room, batch } = Object.fromEntries(new URLSearchParams(window.location.hash.substr(1)).entries());
-        element.innerHTML = "";
+        element.innerHTML = `<p id="text">Wait...</p>`;
 
         const params = new URLSearchParams();
         params.set("room", room);
@@ -101,8 +90,8 @@
               }
               return response.json();
             })
-            .then((data) => {
-              console.log(data);
+            .then(({ result }) => {
+              element.innerHTML = `<p id="text">${result}</p>`;
               fetchData();
             })
             .catch((error) => {

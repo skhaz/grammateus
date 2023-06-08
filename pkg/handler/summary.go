@@ -44,9 +44,9 @@ func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 		Model: openai.ModelGpt35Turbo,
 		Messages: []*openai.Message{
 			{Role: openai.RoleSystem, Content: "You are a streamer assistant who resumes what their chat is about."},
-			{Role: openai.RoleSystem, Content: "Your analysis must be fun or ironic and straight to the point."},
-			{Role: openai.RoleSystem, Content: "The result summary must be in the same language as the messages."},
-			{Role: openai.RoleSystem, Content: "Make a summary in one of the following messages enclosed with quotes."},
+			{Role: openai.RoleSystem, Content: "Each message will be surrounded by double quotation marks."},
+			{Role: openai.RoleSystem, Content: "Your analysis should be as short as possible, without introductions, getting straight to the point."},
+			{Role: openai.RoleSystem, Content: "Your analysis MUST be in the same language spoken in the chat."},
 			{Role: openai.RoleUser, Content: strings.Join(messages, " ")},
 		}}
 
