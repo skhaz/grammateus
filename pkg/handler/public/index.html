@@ -58,7 +58,7 @@
         if (user) {
           window.location.hash = new URLSearchParams({
             room: user,
-            batch: 8,
+            batch: 10,
           }).toString();
         }
       };
@@ -75,7 +75,43 @@
       };
 
       const renderSummary = () => {
-        const { room } = Object.fromEntries(new URLSearchParams(window.location.hash.substr(1)).entries());
+        const { room, batch } = Object.fromEntries(new URLSearchParams(window.location.hash.substr(1)).entries());
+        element.innerHTML = "";
+
+        const params = new URLSearchParams();
+        params.set("room", room);
+        params.set("batch", batch);
+
+        const url = new URL("/summary?" + params.toString(), window.location.href);
+
+        function fetchData() {
+          const controller = new AbortController();
+          const signal = controller.signal;
+
+          const id = setTimeout(() => {
+            controller.abort();
+          }, 60 * 1000);
+
+          fetch(url.toString(), { signal })
+            .then((response) => {
+              clearTimeout(id);
+
+              if (!response.ok) {
+                throw new Error("Erro na resposta da requisição");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log(data);
+              fetchData();
+            })
+            .catch((error) => {
+              console.error(error);
+              setTimeout(fetchData, 10 * 1000);
+            });
+        }
+
+        fetchData();
       };
 
       const render = () => {
