@@ -11,7 +11,6 @@ var public embed.FS
 func (h *Handler) Index(writer http.ResponseWriter, request *http.Request) {
 	bytes, _ := public.ReadFile("public/index.html")
 
-	writer.Header().Set("Cache-Control", "public, max-age=86400")
 	writer.Header().Set("Content-Type", "text/html; charset=utf-8")
 	writer.Write(bytes)
 }
