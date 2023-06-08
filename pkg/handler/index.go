@@ -15,9 +15,6 @@ func (h *Handler) Index(writer http.ResponseWriter, request *http.Request) {
 	writer.Write(bytes)
 }
 
-//go:embed public/favicon.ico
-var favicon embed.FS
-
 func (h *Handler) Icon(writer http.ResponseWriter, request *http.Request) {
 	bytes, _ := public.ReadFile("public/index.html")
 
