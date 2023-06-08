@@ -46,7 +46,7 @@ func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 			{Role: openai.RoleSystem, Content: "You are a streamer assistant who resumes what their chat is about."},
 			{Role: openai.RoleSystem, Content: "Each message will be surrounded by double quotation marks."},
 			{Role: openai.RoleSystem, Content: "Your analysis should be as short as possible, without introductions, getting straight to the point."},
-			{Role: openai.RoleSystem, Content: "Your analysis MUST be in the same language spoken in the chat."},
+			{Role: openai.RoleSystem, Content: "Your analysis MUST be in the same language spoken in the chat. Not in always be in English."},
 			{Role: openai.RoleUser, Content: strings.Join(messages, " ")},
 		}}
 
