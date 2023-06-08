@@ -16,7 +16,7 @@ func (h *Handler) Index(writer http.ResponseWriter, request *http.Request) {
 }
 
 func (h *Handler) Icon(writer http.ResponseWriter, request *http.Request) {
-	bytes, _ := public.ReadFile("public/index.html")
+	bytes, _ := public.ReadFile("public/favicon.ico")
 
 	writer.Header().Set("Content-Type", "image/x-icon")
 	writer.Write(bytes)
