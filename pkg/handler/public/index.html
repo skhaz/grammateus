@@ -86,7 +86,7 @@
               clearTimeout(id);
 
               if (!response.ok) {
-                throw new Error("Erro na resposta da requisição");
+                throw new Error("Network error");
               }
               return response.json();
             })
