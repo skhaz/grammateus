@@ -21,6 +21,7 @@ func main() {
 	twitch.Start()
 
 	http.HandleFunc("/", handler.Index)
+	http.HandleFunc("/favicon.ico", handler.Icon)
 	http.HandleFunc("/summary", handler.Summary)
 
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("PORT")), nil))
