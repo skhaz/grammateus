@@ -65,7 +65,7 @@
 
       const renderSummary = () => {
         const { room, batch } = Object.fromEntries(new URLSearchParams(window.location.hash.substr(1)).entries());
-        element.innerHTML = `<p id="text">Wait...</p>`;
+        element.innerHTML = `<p id="text">Analyzing...</p>`;
 
         const params = new URLSearchParams();
         params.set("room", room);
