@@ -43,6 +43,7 @@ func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 	request := &openai.Request{
 		Model: openai.ModelGpt35Turbo,
 		Messages: []*openai.Message{
+			{Role: openai.RoleSystem, Content: "Take a deep breath"},
 			{Role: openai.RoleSystem, Content: "You are a streamer assistant who resumes what their chat is about."},
 			{Role: openai.RoleSystem, Content: "Each message will be surrounded by double quotation marks."},
 			{Role: openai.RoleSystem, Content: "Your analysis should be as short as possible, without introductions, getting straight to the point."},
