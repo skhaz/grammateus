@@ -4,6 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
+      - PORT=3000
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - TWITCH_USER=${TWITCH_USER}
       - TWITCH_TOKEN=${TWITCH_TOKEN}
