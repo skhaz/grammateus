@@ -41,7 +41,7 @@ func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 	}
 
 	request := &openai.Request{
-		Model: openai.ModelO3Mini,
+		Model: openai.ModelGPT4o,
 		Messages: []*openai.Message{
 			{Role: openai.RoleSystem, Content: "Take a deep breath"},
 			{Role: openai.RoleSystem, Content: "You are a streamer assistant who resumes what their chat is about."},
