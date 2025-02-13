@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TWITCH_USER=${TWITCH_USER}
+      - TWITCH_TOKEN=${TWITCH_TOKEN}
+    restart: unless-stopped

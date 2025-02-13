@@ -1,4 +1,4 @@
-name: Deploy on Google Cloud Platform
+name: Deploy
 
 on:
   push:
@@ -8,30 +8,46 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
-
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
-        with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-
-      - name: Deploy to Cloud Run
+      - name: Set up SSH Key
         run: |
-          gcloud config set run/region ${{ secrets.REGION }}
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
 
-          gcloud run deploy ${{ secrets.SERVICE_NAME }} \
-            --source $(pwd) \
-            --allow-unauthenticated \
-            --platform managed \
-            --set-env-vars TWITCH_USER=${{ secrets.TWITCH_USER }} \
-            --set-env-vars TWITCH_TOKEN=${{ secrets.TWITCH_TOKEN }} \
-            --set-env-vars OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} \
+      - name: Configure SSH known_hosts
+        run: |
+          ssh-keyscan -H ${{ secrets.HETZNER_IP }} >> ~/.ssh/known_hosts
 
-          gcloud run services update-traffic ${{ secrets.SERVICE_NAME }} --to-latest
+      - name: Deploy using Docker Compose
+        env:
+          DOCKER_HOST: ssh://root@${{ secrets.HETZNER_IP }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TWITCH_USER: ${{ secrets.TWITCH_USER }}
+          TWITCH_TOKEN: ${{ secrets.TWITCH_TOKEN }}
+        run: |
+          set -e
+
+          docker compose --file compose.yaml --file production.yaml down --remove-orphans
+
+          docker system prune --all --force
+
+          docker compose --file compose.yaml --file production.yaml up --build --force-recreate --detach
+
+          echo "Listing all Docker containers:"
+          docker ps -a
+
+      - name: Purge Cloudflare Cache
+        env:
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+                -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+                -H "Content-Type: application/json" \
+                --data '{"purge_everything":true}'
