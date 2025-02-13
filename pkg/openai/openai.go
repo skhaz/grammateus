@@ -10,7 +10,7 @@ import (
 
 const URL = "https://api.openai.com/v1/chat/completions"
 
-const ModelGpt35Turbo = "gpt-3.5-turbo"
+const ModelO3Mini = "o3-mini"
 
 const (
 	RoleUser      RoleType = "user"
