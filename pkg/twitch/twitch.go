@@ -41,7 +41,7 @@ func (c *Client) Start() {
 		panic(err)
 	}
 
-	fmt.Fprintf(c.conn, "PASS oauth:%s\r\n", c.token)
+	fmt.Fprintf(c.conn, "PASS %s\r\n", c.token)
 	fmt.Fprintf(c.conn, "NICK %s\r\n", c.user)
 
 	go c.polling()
