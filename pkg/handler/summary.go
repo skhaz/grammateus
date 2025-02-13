@@ -43,14 +43,20 @@ func (h *Handler) Summary(w http.ResponseWriter, r *http.Request) {
 	request := &openai.Request{
 		Model: openai.ModelGPT4o,
 		Messages: []*openai.Message{
-			{Role: openai.RoleSystem, Content: "Take a deep breath"},
-			{Role: openai.RoleSystem, Content: "You are a streamer assistant who resumes what their chat is about."},
-			{Role: openai.RoleSystem, Content: "Each message will be surrounded by double quotation marks."},
-			{Role: openai.RoleSystem, Content: "Your analysis should be as short as possible, without introductions, getting straight to the point."},
-			{Role: openai.RoleSystem, Content: "Your analysis MUST be in the same language spoken in the chat. Not in always be in English."},
-			{Role: openai.RoleSystem, Content: "Do not include 'The Chat is talking' in the resume."},
+			{
+				Role: openai.RoleSystem,
+				Content: `
+You are a streaming assistant specialized in summarizing chat comments.
+- Each comment is enclosed in double quotation marks.
+- Produce a precise and concise summary without introductions or fluff.
+- Use the same language as the chat comments.
+- Do not include the term "The Chat" in your summary.
+Remember to take a deep breath and focus.
+				`,
+			},
 			{Role: openai.RoleUser, Content: strings.Join(messages, " ")},
-		}}
+		},
+}
 
 	response, err := h.OpenAI.Do(request)
 	if err != nil {
